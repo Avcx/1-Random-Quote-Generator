@@ -27,8 +27,8 @@ const quotes = [
   {
     quote: `I am the greatest, I said that even before I knew I was.`,
     source: `Muhammad Ali`,
-    citation: `Interviews`,
-    year: `1976`
+    year: `1976`,
+    tags: `Interviews`,
   },
 
   {
@@ -106,12 +106,13 @@ function printQuote() {
     html += `<span class="year">${ quoteObject.year }</span>`
   }
 
+// Adds the closing tag to the html element
+    html += `</p>`;
+
 // Checks for a `tags` property in the quote object and adds it to the page if it exists
   if ( quoteObject.tags ) {
-    html += `<span class="citation">${ quoteObject.tags }</span>`
+    html += `<p class="tags">${ quoteObject.tags }</p>`
   }
-
-    html += `</p>`; // Adds the closing tag to the html element
 
   quoteBox.innerHTML = html; // Prints the html string into the div to display the quote
 
