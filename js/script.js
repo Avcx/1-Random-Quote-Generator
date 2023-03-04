@@ -11,34 +11,47 @@ project 1 - A Random Quote Generator
  * `quotes` array
 ***/
 
+const quoteBox = document.getElementById('quote-box');
+
+
 const quotes = [
 
   {
-    quote: '',
-    source: '',
-    citation: ''
+    quote: `The first and greatest victory is to conquer yourself; to be conquered by yourself is of all things most shameful and vile.`,
+    source: `Plato`
   },
 
   {
-    quote: '',
-    source: '',
-    year: ''
+    quote: `I am the greatest, I said that even before I knew I was.`,
+    source: 'Muhammad Ali',
+    year: `1976`
   },
 
   {
-    quote: '',
-    source: ''
+    quote: `It is better to deserve honours and not to have them, than to have them and not deserve them.`,
+    source: `Humphry Davy`,
+    citation: `Memoirs of the Life of Sir Humphry Davy`
   },
 
   {
-    quote: '',
-    source: ''
+    quote: `Great things are done by a series of small things brought together.`,
+    source: `Vincent Van Gogh`,
+    year: `1882`
   },
 
   {
-    quote: '',
-    source: ''
+    quote: `To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.`,
+    source: `Ralph Waldo Emerson`
   },
+  {
+    quote: `I'd rather be an optimist and a fool than a pessimist and right.`,
+    source: `Albert Einstein`
+  },
+  {
+    quote: `If you can't even clean up your own room, who the hell are you to give advice to the world?`,
+    source: `Jordan Peterson`,
+    year: `2019`
+  }
 ];
 
 /***
@@ -47,8 +60,9 @@ const quotes = [
 
 function getRandomQuote() {
 
-  let quoteNumber = Math.floor( Math.random() * 5 ) + 1;
-  
+  let randomNumber = Math.floor( Math.random() * quotes.length );
+  return quotes[randomNumber];
+
 }
 
 /***
@@ -57,9 +71,23 @@ function getRandomQuote() {
 
 function printQuote() {
 
-}
+  const quoteObject = getRandomQuote();
+  let html = `
+    <p class="quote">${ quoteObject.quote }</p>
+    <p class="source">${ quoteObject.source }
+  `;
+  if ( quoteObject.citation ) {
+    html += `<span class="citation">${ quoteObject.citation }</span>`
+  }
 
-getRandomQuote()
+  if ( quoteObject.year ) {
+    html += `<span class="year">${ quoteObject.year }</span>`
+  }
+  html += `</p>`;
+
+  quoteBox.innerHTML = html;
+
+}
 
 /***
  * click event listener for the print quote button
