@@ -13,6 +13,8 @@ const quoteBox = document.getElementById('quote-box');
 // Creates a `body` variable to store the `body` element for easier future reference in the code
 const body = document.querySelector('body');
 
+let previousQuote;
+
 /***
  * `quotes` array
 ***/
@@ -82,21 +84,24 @@ const getRandomBGColor = () => `rgb(${getRandomNumber(200)},${getRandomNumber(20
 const getRandomQuote = () => quotes[getRandomNumber(quotes.length)];
 
 /***
- * `timer` function creates an timer to repeatedly cycle through quotes every 10 seconds while returning the timer's ID.
+ * `timer` function creates an timer to repeatedly cycle through quotes every 15 seconds while returning the timer's ID.
 ***/
 
-const timer = () => setInterval(printQuote, 10000)
+const timer = () => setInterval(printQuote, 15000)
 
 /***
  * `reset` function clears the timer and creates a new one to avoid multiple timers stacking.
 ***/
 
 const reset = () => {
-  clearInterval(intervalObject);
-  intervalObject = timer();
+  clearInterval(intervalObject); // clears the last created timer
+  intervalObject = timer(); // starts a new timer
+  console.log('Timer has been reset!');
 }
 
 let intervalObject = timer() // initalizes first timer.
+
+console.log('Initalized. Ready to go!');
 
 /***
  * `printQuote` function
@@ -106,6 +111,13 @@ function printQuote() {
 
 // Assigns a random quote to the variable
   const quoteObject = getRandomQuote();
+  console.log ('New quote selected!');
+
+// Checks if the new quote is already on screen
+  if ( quoteObject === previousQuote) {
+    console.log('New quote was a duplicate...');
+    return printQuote(); // Reruns the function to generate a new
+  }
 
 // Creates a string to hold the html to be printed to the page
   let html = `
@@ -130,15 +142,16 @@ function printQuote() {
   if ( quoteObject.tags ) {
     html += `<p class="tags">${ quoteObject.tags }</p>`
   }
-
   quoteBox.innerHTML = html; // Prints the html string into the div to display the quote
 
   body.style.backgroundColor = getRandomBGColor(); // Changes the background color of the page to a random color
+  
+  previousQuote = quoteObject; // Stores last quote in a variable to prevent a duplicate on the next run
 
-  reset();
+  reset(); // Resets Timer
+
+  console.log('Successfully printed.')
 }
-
-// Prints a new quote every 15 seconds.
 
 /***
  * click event listener for the print quote button
