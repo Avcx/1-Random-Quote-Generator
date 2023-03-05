@@ -76,10 +76,27 @@ const getRandomBGColor = () => `rgb(${getRandomNumber(200)},${getRandomNumber(20
 
 
 /***
- * `getRandomQuote` function
+ * `getRandomQuote` function returns a random quote from the `quotes array`
 ***/
 
 const getRandomQuote = () => quotes[getRandomNumber(quotes.length)];
+
+/***
+ * `timer` function creates an timer to repeatedly cycle through quotes every 10 seconds while returning the timer's ID.
+***/
+
+const timer = () => setInterval(printQuote, 10000)
+
+/***
+ * `reset` function clears the timer and creates a new one to avoid multiple timers stacking.
+***/
+
+const reset = () => {
+  clearInterval(intervalObject);
+  intervalObject = timer();
+}
+
+let intervalObject = timer() // initalizes first timer.
 
 /***
  * `printQuote` function
@@ -117,9 +134,11 @@ function printQuote() {
   quoteBox.innerHTML = html; // Prints the html string into the div to display the quote
 
   body.style.backgroundColor = getRandomBGColor(); // Changes the background color of the page to a random color
+
+  reset();
 }
 
-  setInterval(printQuote, 15000) // Prints a new quote every 15 seconds.
+// Prints a new quote every 15 seconds.
 
 /***
  * click event listener for the print quote button
